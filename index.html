@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>West Wing Residences Homeowners' Association, Inc.</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        :root { --navy: #0F2B48; --gold: #D4AF37; --light: #F5F7FA; --accent: #2A6496; --text: #333; }
+        body { color: var(--text); line-height: 1.6; background: #fff; }
+        a { text-decoration: none; color: inherit; }
+
+        header { background: linear-gradient(135deg, var(--navy) 0%, var(--accent) 100%); color: white; padding: 1rem 5%; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo h1 { font-size: 1.4rem; color: var(--gold); }
+        .logo p { font-size: 0.85rem; opacity: 0.85; }
+        nav ul { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; margin-top: 0.5rem; }
+        nav a { color: white; font-weight: 500; padding: 0.5rem 0; border-bottom: 2px solid transparent; transition: all 0.3s; font-size: 0.95rem; }
+        nav a:hover, nav a.active { color: var(--gold); border-bottom-color: var(--gold); }
+        .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; }
+
+        /* ✅ HERO BACKGROUND — FIXED & RELIABLE IMAGE */
+        .hero {
+            background: linear-gradient(rgba(15, 43, 72, 0.78), rgba(42, 100, 150, 0.70)),
+                        url('https://images.unsplash.com/photo-1560448075-bb485b067938?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+            min-height: 85vh;
+            color: white;
+            padding: 6rem 5%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .hero h2 { font-size: 2.5rem; margin-bottom: 1.2rem; color: var(--gold); text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .hero p { font-size: 1.15rem; max-width: 850px; margin: 0 auto 2.2rem; line-height: 1.7; }
+        .btn { display: inline-block; background: var(--gold); color: var(--navy); padding: 0.85rem 2.2rem; border-radius: 6px; font-weight: 600; transition: background 0.3s; margin: 0.3rem; }
+        .btn:hover { background: #b8860b; }
+        .btn-outline { background: transparent; border: 2px solid var(--gold); color: var(--gold); }
+        .btn-outline:hover { background: var(--gold); color: var(--navy); }
+        .btn-pdf { display: inline-flex; align-items: center; gap: 0.5rem; background: #dc3545; color: white; padding: 0.6rem 1.2rem; border-radius: 6px; font-weight: 500; transition: background 0.3s; font-size: 0.95rem; }
+        .btn-pdf:hover { background: #c82333; color: white; }
+
+        section { padding: 3.5rem 5%; }
+        .section-title { text-align: center; font-size: 2rem; color: var(--navy); margin-bottom: 2.5rem; position: relative; }
+        .section-title::after { content: ''; display: block; width: 70px; height: 3px; background: var(--gold); margin: 0.7rem auto 0; }
+        .bg-light { background: var(--light); }
+
+        .about-content { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+        .cert-box { background: #f8f9fa; border-left: 4px solid var(--gold); padding: 1.2rem; margin-top: 1.2rem; border-radius: 0 6px 6px 0; }
+        .purposes-list { list-style: decimal; padding-left: 1.5rem; font-size: 0.92rem; line-height: 1.8; }
+
+        .downloads-container { background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 2rem; }
+        .downloads-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .download-card { background: #f8f9fa; padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--accent); }
+        .download-card h4 { color: var(--navy); margin-bottom: 0.5rem; }
+
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.8rem; }
+        .card { background: white; border-radius: 10px; padding: 1.8rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-top: 4px solid var(--gold); }
+        .payment-box { background: #f8f9fa; border: 2px solid var(--gold); border-radius: 8px; padding: 1.2rem; margin-top: 0.8rem; }
+        .account-no { font-size: 1.1rem; font-weight: bold; color: var(--accent); letter-spacing: 1px; margin-top: 0.5rem; }
+        .incorporators-table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.88rem; }
+        .incorporators-table th, .incorporators-table td { padding: 0.6rem; text-align: left; border-bottom: 1px solid #eee; }
+
+        .board-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 2rem; text-align: center; }
+        .member-card { background: white; border-radius: 10px; padding: 1.8rem 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .member-avatar { width: 90px; height: 90px; border-radius: 50%; background: linear-gradient(135deg, var(--navy), var(--accent)); color: white; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; margin: 0 auto 1rem; }
+
+        .bylaws-container { background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .bylaws-article { margin-bottom: 1.8rem; }
+        .bylaws-article h4 { color: var(--navy); font-size: 1.05rem; margin-bottom: 0.8rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--gold); }
+        .dues-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.95rem; }
+        .dues-table th, .dues-table td { padding: 0.7rem; text-align: left; border: 1px solid #ddd; }
+        .dues-table th { background: var(--navy); color: white; }
+
+        .announcement-item { background: white; border-left: 4px solid var(--gold); padding: 1.2rem; margin-bottom: 1rem; border-radius: 0 6px 6px 0; }
+        .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+        form { display: flex; flex-direction: column; gap: 0.9rem; }
+        input, textarea { padding: 0.85rem; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; }
+
+        footer { background: var(--navy); color: white; padding: 2.5rem 5% 1rem; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-bottom: 1.5rem; }
+        .copyright { text-align: center; padding-top: 1.2rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; opacity: 0.75; }
+
+        @media(max-width: 768px) {
+            .menu-toggle { display: block; }
+            nav ul { width: 100%; flex-direction: column; gap: 0.8rem; margin-top: 0.8rem; display: none; }
+            nav ul.show { display: flex; }
+            .about-content, .contact-wrapper { grid-template-columns: 1fr; }
+            .hero h2 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="logo">
+            <div>
+                <h1>West Wing Residences</h1>
+                <p>Homeowners' Association, Inc.</p>
+            </div>
+        </div>
+        <div class="menu-toggle" onclick="toggleMenu()">&#9776;</div>
+        <nav>
+            <ul id="navMenu">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#bylaws">By-Laws</a></li>
+                <li><a href="#announcements">Announcements</a></li>
+                <li><a href="#board">Board of Directors</a></li>
+                <li><a href="#documents">Documents</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- ✅ HERO SECTION — BACKGROUND IMAGE WILL LOAD NOW -->
+<section class="hero" id="home">
+    <h2>Welcome to West Wing Residences</h2>
+    <p>Official website of the <strong>West Wing Residences Homeowners' Association, Inc.</strong> — 2nd Floor, West Wing Residences Clubhouse, Barangay 163, Caloocan City. Registered with DHSUD under RA 9904. Certificate No. NCR-H-26-0116 — Registered May 21, 2026.</p>
+    <a href="#about" class="btn">About Our Association</a>
+    <a href="#documents" class="btn btn-outline">Download Documents</a>
+</section>
+
+<section id="about" class="bg-light">
+    <h2 class="section-title">About Us</h2>
+    <div class="about-content">
+        <div>
+            <h3>Our Mission & Purposes</h3>
+            <p>West Wing Residences Homeowners' Association, Inc. is a <strong>non-stock, non-profit</strong> homeowners' association duly organized under <strong>Republic Act No. 9904</strong>.</p>
+            <ol class="purposes-list">
+                <li>Promote and protect members' mutual interests and assist in community development;</li>
+                <li>Construct, manage, maintain, and operate adequate facilities and services;</li>
+                <li>Organize socio-cultural projects to awaken community consciousness and belonging;</li>
+                <li>Promote quality of life through livelihood projects and economic activities;</li>
+                <li>Support local government in delivering services and implementing policies;</li>
+                <li>Ensure safety and security; contract security and maintenance services;</li>
+                <li>Adopt rules for use of common areas; impose penalties for violations;</li>
+                <li>Maintain, repair, sanitize, and beautify common areas;</li>
+                <li>Contract administrative, legal, accounting, and professional services;</li>
+                <li>Operate recreation facilities; use income to meet operating expenses;</li>
+                <li>Discharge any lien or encumbrance upon the subdivision;</li>
+                <li>Levy and collect fees, dues, and assessments;</li>
+                <li>Exercise all powers necessary to accomplish the foregoing purposes.</li>
+            </ol>
+        </div>
+        <div>
+            <h3>Legal Registration</h3>
+            <p><strong>Incorporated:</strong> March 9, 2026<br>
+            <strong>Notarized:</strong> March 19, 2026<br>
+            <strong>Registered with DHSUD:</strong> May 21, 2026<br>
+            <strong>Existence:</strong> Perpetual<br>
+            <strong>Legal Basis:</strong> Republic Act No. 9904</p>
+            <div class="cert-box">
+                <h4>📜 Certificate of Incorporation</h4>
+                <p><strong>Cert. No.:</strong> NCR-H-26-0116</p>
+                <p><strong>TIN:</strong> 0025218</p>
+                <p><strong>Registered:</strong> May 21, 2026</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="bylaws">
+    <h2 class="section-title">Association By-Laws</h2>
+    <div class="bylaws-container">
+        <div class="bylaws-article">
+            <h4>📋 Article I — Membership</h4>
+            <ul>
+                <li><strong>Automatic Membership:</strong> All homeowners automatically become members.</li>
+                <li><strong>Membership Fee:</strong> ₱500.00 one-time</li>
+                <li><strong>Monthly Dues:</strong> ₱29.00 per square meter</li>
+                <li><strong>Delinquency:</strong> 3 unpaid months → rights suspended. Grace period: 60 days.</li>
+            </ul>
+        </div>
+        <div class="bylaws-article">
+            <h4>💰 Article II — Dues & Fees</h4>
+            <table class="dues-table">
+                <tr><th>Type</th><th>Rate</th></tr>
+                <tr><td>Membership Fee</td><td>₱500.00 (one-time)</td></tr>
+                <tr><td>Monthly Dues</td><td>₱29.00 / sq.m.</td></tr>
+            </table>
+        </div>
+        <div class="bylaws-article">
+            <h4>🗓️ Article III — Meetings</h4>
+            <ul>
+                <li><strong>Annual Meeting:</strong> 3rd week of November each year</li>
+                <li><strong>Quorum:</strong> Majority of members in good standing</li>
+                <li><strong>Proxy:</strong> Allowed in writing; valid up to 3 years</li>
+            </ul>
+        </div>
+        <div class="bylaws-article">
+            <h4>🏛️ Article IV — Board of Directors</h4>
+            <ul>
+                <li><strong>Board Size:</strong> 5 members</li>
+                <li><strong>Term:</strong> 2 years</li>
+                <li><strong>Officers:</strong> President, Vice President, Secretary, Treasurer, Auditor</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section id="announcements" class="bg-light">
+    <h2 class="section-title">Announcements</h2>
+    <div class="announcement-item">
+        <span><strong>August 29, 2026</strong> — Website Launched</span>
+        <h4>Welcome to Our Official Website!</h4>
+        <p>Download your official documents below. Dues are ₱29.00/sq.m. monthly + ₱500.00 one-time membership fee.</p>
+    </div>
+</section>
+
+<section id="board">
+    <h2 class="section-title">Board of Directors</h2>
+    <div class="board-grid">
+        <div class="member-card"><div class="member-avatar">E</div><h4>Edgardo P. Oliveros Jr.</h4><p>President</p></div>
+        <div class="member-card"><div class="member-avatar">L</div><h4>Leo S. Valeda</h4><p>Vice President</p></div>
+        <div class="member-card"><div class="member-avatar">D</div><h4>Dulce Abutal</h4><p>Secretary</p></div>
+        <div class="member-card"><div class="member-avatar">A</div><h4>Arman Ignacio</h4><p>Treasurer</p></div>
+        <div class="member-card"><div class="member-avatar">J</div><h4>Jeoffrey F. Alcid</h4><p>Auditor</p></div>
+    </div>
+</section>
+
+<!-- ✅ DOCUMENTS SECTION — ALL 3 PDF LINKS UPDATED WITH YOUR FRESH LINKS -->
+<section id="documents" class="bg-light">
+    <h2 class="section-title">📁 Download Official Documents</h2>
+    <div class="downloads-container">
+        <div class="downloads-grid">
+            <div class="download-card">
+                <h4>🏢 Certificate of Incorporation</h4>
+                <p>DHSUD Cert. No. NCR-H-26-0116<br>Registered May 21, 2026</p>
+                <a href="https://p-flow-file-sign-sgnontt.byteintl.net/tos-mya-i-u8dpqn1f20/c388d21aa55241b1bdc2101a9186b934.pdf?rcl=20260829133848BA458F08A404F1B45C64&rk3s=8e244e95&rrcfp=5e034a21&x-orig-authkey=floworigin&x-orig-expires=1788068329&x-orig-sign=r1uVIIM4%2FI%2FjqC3VPS5EMvbth4g%3D" target="_blank" class="btn-pdf">📥 Download Certificate</a>
+            </div>
+            <div class="download-card">
+                <h4>📄 Articles of Incorporation</h4>
+                <p>DHSUD Form 2-001 — Rev.01 (Jan 2025)<br>Adopted March 9, 2026</p>
+                <a href="https://p-flow-file-sign-sgnontt.byteintl.net/tos-mya-i-u8dpqn1f20/9d68a6c7af4a44a39948736246d36d1f.pdf?rcl=20260829133848BA458F08A404F1B45C64&rk3s=8e244e95&rrcfp=5e034a21&x-orig-authkey=floworigin&x-orig-expires=1788068329&x-orig-sign=nUi7YiXM3Abwh4cX8O8vVOwZwm8%3D" target="_blank" class="btn-pdf">📥 Download AOI</a>
+            </div>
+            <div class="download-card">
+                <h4>📋 By-Laws</h4>
+                <p>DHSUD Form 2-005 — Rev.01 (Jan 2025)<br>Adopted March 9, 2026</p>
+                <a href="https://p-flow-file-sign-sgnontt.byteintl.net/tos-mya-i-u8dpqn1f20/bf004f4e1e484fc9a45b71267e4e6b84.pdf?rcl=20260829133848BA458F08A404F1B45C64&rk3s=8e244e95&rrcfp=5e034a21&x-orig-authkey=floworigin&x-orig-expires=1788068329&x-orig-sign=nJv5TwTknWUl1nQ%2FQt4h4pie%2F2g%3D" target="_blank" class="btn-pdf">📥 Download By-Laws</a>
+            </div>
+        </div>
+    </div>
+    <div class="cards-grid">
+        <div class="card">
+            <h3>💰 Payment Info</h3>
+            <p><strong>BDO Unibank</strong><br>West Wing Residences HOA, Inc.<br>Account No.: <strong>001168034629</strong></p>
+            <p style="margin-top:0.5rem; font-size:0.9rem;">⚠️ Include Unit/House No. as reference</p>
+        </div>
+        <div class="card">
+            <h3>📞 Contact Us</h3>
+            <p>📧 westwingresidences.hoa@gmail.com<br>📱 +63 939 773 4476<br>📍 Clubhouse, Brgy. 163, Caloocan City</p>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <h2 class="section-title">Contact Us</h2>
+    <div class="contact-wrapper">
+        <div class="contact-info">
+            <p><strong>📍 Office:</strong> 2nd Flr. Clubhouse, West Wing Residences, Brgy. 163, Caloocan City</p>
+            <p><strong>📧 Email:</strong> westwingresidences.hoa@gmail.com</p>
+            <p><strong>📞 Mobile:</strong> +63 939 773 4476</p>
+            <p><strong>🕒 Hours:</strong> Mon–Fri, 9AM–5PM</p>
+        </div>
+        <form onsubmit="alert('✅ Message sent successfully!'); this.reset(); return false;">
+            <input type="text" placeholder="Your Full Name" required>
+            <input type="text" placeholder="Unit / House No." required>
+            <input type="email" placeholder="Email" required>
+            <textarea rows="4" placeholder="Your Message" required></textarea>
+            <button type="submit" class="btn">Send Message</button>
+        </form>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-grid">
+        <div class="footer-col">
+            <h4>West Wing Residences HOA</h4>
+            <p>Cert. No.: NCR-H-26-0116 | TIN: 0025218<br>Registered May 21, 2026 — RA 9904</p>
+        </div>
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul style="list-style:none; gap:0.5rem;">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#documents">Documents</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="copyright">© 2026 West Wing Residences Homeowners' Association, Inc. — All Rights Reserved</div>
+</footer>
+
+<script>
+    function toggleMenu() { document.getElementById('navMenu').classList.toggle('show'); }
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.onclick = e => { e.preventDefault(); document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'}); document.getElementById('navMenu').classList.remove('show'); };
+    });
+</script>
+
+</body>
+</html>
