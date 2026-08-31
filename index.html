@@ -1,304 +1,201 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>West Wing Residences Homeowners' Association, Inc.</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        :root { --navy: #0F2B48; --gold: #D4AF37; --light: #F5F7FA; --accent: #2A6496; --text: #333; }
-        body { color: var(--text); line-height: 1.6; background: #fff; }
-        a { text-decoration: none; color: inherit; }
-
-        header { background: linear-gradient(135deg, var(--navy) 0%, var(--accent) 100%); color: white; padding: 1rem 5%; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
-        .header-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
-        .logo h1 { font-size: 1.4rem; color: var(--gold); }
-        .logo p { font-size: 0.85rem; opacity: 0.85; }
-        nav ul { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; margin-top: 0.5rem; }
-        nav a { color: white; font-weight: 500; padding: 0.5rem 0; border-bottom: 2px solid transparent; transition: all 0.3s; font-size: 0.95rem; }
-        nav a:hover, nav a.active { color: var(--gold); border-bottom-color: var(--gold); }
-        .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; }
-
-        /* ✅ HERO BACKGROUND — FIXED & RELIABLE IMAGE */
-        .hero {
-            background: linear-gradient(rgba(15, 43, 72, 0.78), rgba(42, 100, 150, 0.70)),
-                        url('https://images.unsplash.com/photo-1560448075-bb485b067938?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
-            min-height: 85vh;
-            color: white;
-            padding: 6rem 5%;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .hero h2 { font-size: 2.5rem; margin-bottom: 1.2rem; color: var(--gold); text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-        .hero p { font-size: 1.15rem; max-width: 850px; margin: 0 auto 2.2rem; line-height: 1.7; }
-        .btn { display: inline-block; background: var(--gold); color: var(--navy); padding: 0.85rem 2.2rem; border-radius: 6px; font-weight: 600; transition: background 0.3s; margin: 0.3rem; }
-        .btn:hover { background: #b8860b; }
-        .btn-outline { background: transparent; border: 2px solid var(--gold); color: var(--gold); }
-        .btn-outline:hover { background: var(--gold); color: var(--navy); }
-        .btn-pdf { display: inline-flex; align-items: center; gap: 0.5rem; background: #dc3545; color: white; padding: 0.6rem 1.2rem; border-radius: 6px; font-weight: 500; transition: background 0.3s; font-size: 0.95rem; }
-        .btn-pdf:hover { background: #c82333; color: white; }
-
-        section { padding: 3.5rem 5%; }
-        .section-title { text-align: center; font-size: 2rem; color: var(--navy); margin-bottom: 2.5rem; position: relative; }
-        .section-title::after { content: ''; display: block; width: 70px; height: 3px; background: var(--gold); margin: 0.7rem auto 0; }
-        .bg-light { background: var(--light); }
-
-        .about-content { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
-        .cert-box { background: #f8f9fa; border-left: 4px solid var(--gold); padding: 1.2rem; margin-top: 1.2rem; border-radius: 0 6px 6px 0; }
-        .purposes-list { list-style: decimal; padding-left: 1.5rem; font-size: 0.92rem; line-height: 1.8; }
-
-        .downloads-container { background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 2rem; }
-        .downloads-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-        .download-card { background: #f8f9fa; padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--accent); }
-        .download-card h4 { color: var(--navy); margin-bottom: 0.5rem; }
-
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.8rem; }
-        .card { background: white; border-radius: 10px; padding: 1.8rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-top: 4px solid var(--gold); }
-        .payment-box { background: #f8f9fa; border: 2px solid var(--gold); border-radius: 8px; padding: 1.2rem; margin-top: 0.8rem; }
-        .account-no { font-size: 1.1rem; font-weight: bold; color: var(--accent); letter-spacing: 1px; margin-top: 0.5rem; }
-        .incorporators-table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.88rem; }
-        .incorporators-table th, .incorporators-table td { padding: 0.6rem; text-align: left; border-bottom: 1px solid #eee; }
-
-        .board-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 2rem; text-align: center; }
-        .member-card { background: white; border-radius: 10px; padding: 1.8rem 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        .member-avatar { width: 90px; height: 90px; border-radius: 50%; background: linear-gradient(135deg, var(--navy), var(--accent)); color: white; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; margin: 0 auto 1rem; }
-
-        .bylaws-container { background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        .bylaws-article { margin-bottom: 1.8rem; }
-        .bylaws-article h4 { color: var(--navy); font-size: 1.05rem; margin-bottom: 0.8rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--gold); }
-        .dues-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.95rem; }
-        .dues-table th, .dues-table td { padding: 0.7rem; text-align: left; border: 1px solid #ddd; }
-        .dues-table th { background: var(--navy); color: white; }
-
-        .announcement-item { background: white; border-left: 4px solid var(--gold); padding: 1.2rem; margin-bottom: 1rem; border-radius: 0 6px 6px 0; }
-        .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
-        form { display: flex; flex-direction: column; gap: 0.9rem; }
-        input, textarea { padding: 0.85rem; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; }
-
-        footer { background: var(--navy); color: white; padding: 2.5rem 5% 1rem; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-bottom: 1.5rem; }
-        .copyright { text-align: center; padding-top: 1.2rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; opacity: 0.75; }
-
-        @media(max-width: 768px) {
-            .menu-toggle { display: block; }
-            nav ul { width: 100%; flex-direction: column; gap: 0.8rem; margin-top: 0.8rem; display: none; }
-            nav ul.show { display: flex; }
-            .about-content, .contact-wrapper { grid-template-columns: 1fr; }
-            .hero h2 { font-size: 1.8rem; }
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>West Wing Residences Homeowners’ Association, Inc.</title>
+  <meta name="description" content="Official website of West Wing Residences Homeowners’ Association, Inc. — announcements, billing, proof of payment, documents, community rules, meetings and homeowner support.">
+  <meta name="theme-color" content="#8e0000">
+  <meta property="og:title" content="West Wing Residences Homeowners’ Association, Inc.">
+  <meta property="og:description" content="One Community. One Home. One West Wing.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/hero-bg.jpg">
+  <link rel="icon" href="assets/wwrhai-logo.png">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
-<header>
-    <div class="header-inner">
-        <div class="logo">
-            <div>
-                <h1>West Wing Residences</h1>
-                <p>Homeowners' Association, Inc.</p>
-            </div>
-        </div>
-        <div class="menu-toggle" onclick="toggleMenu()">&#9776;</div>
-        <nav>
-            <ul id="navMenu">
-                <li><a href="#home" class="active">Home</a></li>
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#bylaws">By-Laws</a></li>
-                <li><a href="#announcements">Announcements</a></li>
-                <li><a href="#board">Board of Directors</a></li>
-                <li><a href="#documents">Documents</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="contact-mini">
+      <a href="mailto:westwingresidences.hoa@gmail.com">✉ <span>westwingresidences.hoa@gmail.com</span></a>
+      <span class="divider"></span>
+      <a href="tel:+639397734476">☎ <span>0939 773 4476 (Viber)</span></a>
     </div>
+    <a class="portal" href="#portal" data-modal="portalModal">♙ &nbsp; HOMEOWNER PORTAL</a>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="brand">
+    <img src="assets/wwrhai-logo.png" alt="West Wing Residences Homeowners' Association logo">
+    <div class="brand-copy">
+      <h1>WEST WING RESIDENCES</h1>
+      <h2>HOMEOWNERS’ ASSOCIATION, INC.</h2>
+      <p>One Community. One Home. One West Wing.</p>
+    </div>
+  </div>
+  <address class="address">
+    <div class="pin">●</div>
+    <div>
+      <strong>West Wing Residences</strong><br>
+      Brgy. 163, Sta. Quiteria/Talipapa,<br>
+      District 1, Caloocan, Northern Manila District,<br>
+      Metro Manila
+    </div>
+  </address>
 </header>
 
-<!-- ✅ HERO SECTION — BACKGROUND IMAGE WILL LOAD NOW -->
-<section class="hero" id="home">
-    <h2>Welcome to West Wing Residences</h2>
-    <p>Official website of the <strong>West Wing Residences Homeowners' Association, Inc.</strong> — 2nd Floor, West Wing Residences Clubhouse, Barangay 163, Caloocan City. Registered with DHSUD under RA 9904. Certificate No. NCR-H-26-0116 — Registered May 21, 2026.</p>
-    <a href="#about" class="btn">About Our Association</a>
-    <a href="#documents" class="btn btn-outline">Download Documents</a>
+<nav class="nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <button class="mobile-toggle" aria-expanded="false" aria-controls="navLinks">☰ MENU</button>
+    <div id="navLinks" class="nav-links">
+      <a class="active" href="#home">⌂ &nbsp;HOME</a>
+      <div class="nav-dropdown">
+        <button type="button">ABOUT WWRHAI <span>⌄</span></button>
+        <div class="dropdown-menu">
+          <a href="#about">About the Association</a><a href="#board">Board &amp; Management</a>
+        </div>
+      </div>
+      <a href="#announcements">ANNOUNCEMENTS</a>
+      <div class="nav-dropdown">
+        <button type="button">BILLING / SOA <span>⌄</span></button>
+        <div class="dropdown-menu"><a href="#billing">View Billing / SOA</a><a href="#payment">Proof of Payment</a></div>
+      </div>
+      <a href="#payment">PROOF OF PAYMENT</a>
+      <div class="nav-dropdown">
+        <button type="button">DOCUMENTS <span>⌄</span></button>
+        <div class="dropdown-menu"><a href="#documents">Forms &amp; Documents</a><a href="#documents">Official Records</a></div>
+      </div>
+      <a href="#rules">COMMUNITY RULES</a><a href="#events">MEETINGS &amp; EVENTS</a><a href="#contact">CONTACT US</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+<section id="home" class="hero" aria-label="Welcome">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="eyebrow">Welcome to</p>
+    <h2>WEST WING RESIDENCES<br>HOMEOWNERS’<br>ASSOCIATION, INC.</h2>
+    <span class="red-rule"></span>
+    <p class="hero-subtitle">Working together for a better, safer and<br>well-maintained community for all homeowners.</p>
+    <a class="btn btn-red" href="#about">LEARN MORE ABOUT WWRHAI <span>›</span></a>
+  </div>
+  <button class="slider-arrow left" aria-label="Previous slide" data-slide="-1">‹</button>
+  <button class="slider-arrow right" aria-label="Next slide" data-slide="1">›</button>
+  <div class="dots" aria-label="Hero slides">
+    <button class="dot active" data-slide-to="0" aria-label="Slide 1"></button>
+    <button class="dot" data-slide-to="1" aria-label="Slide 2"></button>
+    <button class="dot" data-slide-to="2" aria-label="Slide 3"></button>
+  </div>
 </section>
 
-<section id="about" class="bg-light">
-    <h2 class="section-title">About Us</h2>
-    <div class="about-content">
-        <div>
-            <h3>Our Mission & Purposes</h3>
-            <p>West Wing Residences Homeowners' Association, Inc. is a <strong>non-stock, non-profit</strong> homeowners' association duly organized under <strong>Republic Act No. 9904</strong>.</p>
-            <ol class="purposes-list">
-                <li>Promote and protect members' mutual interests and assist in community development;</li>
-                <li>Construct, manage, maintain, and operate adequate facilities and services;</li>
-                <li>Organize socio-cultural projects to awaken community consciousness and belonging;</li>
-                <li>Promote quality of life through livelihood projects and economic activities;</li>
-                <li>Support local government in delivering services and implementing policies;</li>
-                <li>Ensure safety and security; contract security and maintenance services;</li>
-                <li>Adopt rules for use of common areas; impose penalties for violations;</li>
-                <li>Maintain, repair, sanitize, and beautify common areas;</li>
-                <li>Contract administrative, legal, accounting, and professional services;</li>
-                <li>Operate recreation facilities; use income to meet operating expenses;</li>
-                <li>Discharge any lien or encumbrance upon the subdivision;</li>
-                <li>Levy and collect fees, dues, and assessments;</li>
-                <li>Exercise all powers necessary to accomplish the foregoing purposes.</li>
-            </ol>
-        </div>
-        <div>
-            <h3>Legal Registration</h3>
-            <p><strong>Incorporated:</strong> March 9, 2026<br>
-            <strong>Notarized:</strong> March 19, 2026<br>
-            <strong>Registered with DHSUD:</strong> May 21, 2026<br>
-            <strong>Existence:</strong> Perpetual<br>
-            <strong>Legal Basis:</strong> Republic Act No. 9904</p>
-            <div class="cert-box">
-                <h4>📜 Certificate of Incorporation</h4>
-                <p><strong>Cert. No.:</strong> NCR-H-26-0116</p>
-                <p><strong>TIN:</strong> 0025218</p>
-                <p><strong>Registered:</strong> May 21, 2026</p>
-            </div>
-        </div>
-    </div>
+<section id="announcements" class="announcement" aria-labelledby="latest-heading">
+  <div class="announcement-label">📣 <span id="latest-heading">LATEST<br>ANNOUNCEMENT</span></div>
+  <div class="announcement-content">
+    <strong>May 21, 2026</strong>
+    <h3>Official Effectivity Date of WWRHAI Assumption of Management</h3>
+    <p>Please be informed that the official effectivity date of WWRHAI's assumption of management/administration is June 1, 2026.</p>
+  </div>
+  <a class="outline-btn" href="#announcements-list">VIEW ALL ANNOUNCEMENTS</a>
 </section>
 
-<section id="bylaws">
-    <h2 class="section-title">Association By-Laws</h2>
-    <div class="bylaws-container">
-        <div class="bylaws-article">
-            <h4>📋 Article I — Membership</h4>
-            <ul>
-                <li><strong>Automatic Membership:</strong> All homeowners automatically become members.</li>
-                <li><strong>Membership Fee:</strong> ₱500.00 one-time</li>
-                <li><strong>Monthly Dues:</strong> ₱29.00 per square meter</li>
-                <li><strong>Delinquency:</strong> 3 unpaid months → rights suspended. Grace period: 60 days.</li>
-            </ul>
-        </div>
-        <div class="bylaws-article">
-            <h4>💰 Article II — Dues & Fees</h4>
-            <table class="dues-table">
-                <tr><th>Type</th><th>Rate</th></tr>
-                <tr><td>Membership Fee</td><td>₱500.00 (one-time)</td></tr>
-                <tr><td>Monthly Dues</td><td>₱29.00 / sq.m.</td></tr>
-            </table>
-        </div>
-        <div class="bylaws-article">
-            <h4>🗓️ Article III — Meetings</h4>
-            <ul>
-                <li><strong>Annual Meeting:</strong> 3rd week of November each year</li>
-                <li><strong>Quorum:</strong> Majority of members in good standing</li>
-                <li><strong>Proxy:</strong> Allowed in writing; valid up to 3 years</li>
-            </ul>
-        </div>
-        <div class="bylaws-article">
-            <h4>🏛️ Article IV — Board of Directors</h4>
-            <ul>
-                <li><strong>Board Size:</strong> 5 members</li>
-                <li><strong>Term:</strong> 2 years</li>
-                <li><strong>Officers:</strong> President, Vice President, Secretary, Treasurer, Auditor</li>
-            </ul>
-        </div>
-    </div>
+<section class="quick-grid" aria-label="Community services">
+  <a class="quick-card" href="#billing"><div class="icon">▣</div><h3>BILLING / SOA</h3><p>View billing information, association dues, water charges and request your SOA.</p></a>
+  <a class="quick-card" href="#payment"><div class="icon">◉</div><h3>PROOF OF PAYMENT</h3><p>Submit your proof of payment through our secure online form.</p></a>
+  <a class="quick-card" href="#documents"><div class="icon">▰</div><h3>DOCUMENTS</h3><p>Access important HOA documents, forms, and official records.</p></a>
+  <a class="quick-card" href="#rules"><div class="icon">⚖</div><h3>COMMUNITY RULES</h3><p>Read and understand the rules and policies for a harmonious community.</p></a>
+  <a class="quick-card" href="#events"><div class="icon">▦</div><h3>MEETINGS &amp; EVENTS</h3><p>Stay updated on General Assemblies, elections, townhall meetings and events.</p></a>
+  <a class="quick-card" href="#contact"><div class="icon">☎</div><h3>CONTACT US</h3><p>Get in touch with the HOA Board and management team.</p></a>
 </section>
 
-<section id="announcements" class="bg-light">
-    <h2 class="section-title">Announcements</h2>
-    <div class="announcement-item">
-        <span><strong>August 29, 2026</strong> — Website Launched</span>
-        <h4>Welcome to Our Official Website!</h4>
-        <p>Download your official documents below. Dues are ₱29.00/sq.m. monthly + ₱500.00 one-time membership fee.</p>
-    </div>
+<section id="about" class="content-section">
+  <div><p class="section-kicker">ABOUT WWRHAI</p><h2>One Community. One Home. One West Wing.</h2>
+  <p>West Wing Residences Homeowners’ Association, Inc. is committed to supporting a better, safer and well-maintained community for all homeowners.</p>
+  <p>This website is the community’s central place for official announcements, billing information, documents, community rules, meetings and homeowner support.</p></div>
+  <div id="board" class="info-box"><h3>Board &amp; Management</h3><p>Official association notices and management updates will be posted here for homeowners’ reference.</p></div>
 </section>
 
-<section id="board">
-    <h2 class="section-title">Board of Directors</h2>
-    <div class="board-grid">
-        <div class="member-card"><div class="member-avatar">E</div><h4>Edgardo P. Oliveros Jr.</h4><p>President</p></div>
-        <div class="member-card"><div class="member-avatar">L</div><h4>Leo S. Valeda</h4><p>Vice President</p></div>
-        <div class="member-card"><div class="member-avatar">D</div><h4>Dulce Abutal</h4><p>Secretary</p></div>
-        <div class="member-card"><div class="member-avatar">A</div><h4>Arman Ignacio</h4><p>Treasurer</p></div>
-        <div class="member-card"><div class="member-avatar">J</div><h4>Jeoffrey F. Alcid</h4><p>Auditor</p></div>
-    </div>
+<section id="billing" class="content-section alt">
+  <div><p class="section-kicker">BILLING / SOA</p><h2>Association Billing Information</h2>
+  <p>Use this section for monthly association dues, water charges, statements of account and billing requests.</p></div>
+  <div class="info-box"><h3>Request an SOA</h3><p>For an updated Statement of Account, send a request to the HOA email.</p>
+  <a class="btn btn-red" href="mailto:westwingresidences.hoa@gmail.com?subject=SOA%20Request">REQUEST SOA</a></div>
 </section>
 
-<!-- ✅ DOCUMENTS SECTION — ALL 3 PDF LINKS UPDATED WITH YOUR FRESH LINKS -->
-<section id="documents" class="bg-light">
-    <h2 class="section-title">📁 Download Official Documents</h2>
-    <div class="downloads-container">
-        <div class="downloads-grid">
-            <div class="download-card">
-                <h4>🏢 Certificate of Incorporation</h4>
-                <p>DHSUD Cert. No. NCR-H-26-0116<br>Registered May 21, 2026</p>
-                <a href="https://p-flow-file-sign-sgnontt.byteintl.net/tos-mya-i-u8dpqn1f20/c388d21aa55241b1bdc2101a9186b934.pdf?rcl=20260829133848BA458F08A404F1B45C64&rk3s=8e244e95&rrcfp=5e034a21&x-orig-authkey=floworigin&x-orig-expires=1788068329&x-orig-sign=r1uVIIM4%2FI%2FjqC3VPS5EMvbth4g%3D" target="_blank" class="btn-pdf">📥 Download Certificate</a>
-            </div>
-            <div class="download-card">
-                <h4>📄 Articles of Incorporation</h4>
-                <p>DHSUD Form 2-001 — Rev.01 (Jan 2025)<br>Adopted March 9, 2026</p>
-                <a href="https://p-flow-file-sign-sgnontt.byteintl.net/tos-mya-i-u8dpqn1f20/9d68a6c7af4a44a39948736246d36d1f.pdf?rcl=20260829133848BA458F08A404F1B45C64&rk3s=8e244e95&rrcfp=5e034a21&x-orig-authkey=floworigin&x-orig-expires=1788068329&x-orig-sign=nUi7YiXM3Abwh4cX8O8vVOwZwm8%3D" target="_blank" class="btn-pdf">📥 Download AOI</a>
-            </div>
-            <div class="download-card">
-                <h4>📋 By-Laws</h4>
-                <p>DHSUD Form 2-005 — Rev.01 (Jan 2025)<br>Adopted March 9, 2026</p>
-                <a href="https://p-flow-file-sign-sgnontt.byteintl.net/tos-mya-i-u8dpqn1f20/bf004f4e1e484fc9a45b71267e4e6b84.pdf?rcl=20260829133848BA458F08A404F1B45C64&rk3s=8e244e95&rrcfp=5e034a21&x-orig-authkey=floworigin&x-orig-expires=1788068329&x-orig-sign=nJv5TwTknWUl1nQ%2FQt4h4pie%2F2g%3D" target="_blank" class="btn-pdf">📥 Download By-Laws</a>
-            </div>
-        </div>
-    </div>
-    <div class="cards-grid">
-        <div class="card">
-            <h3>💰 Payment Info</h3>
-            <p><strong>BDO Unibank</strong><br>West Wing Residences HOA, Inc.<br>Account No.: <strong>001168034629</strong></p>
-            <p style="margin-top:0.5rem; font-size:0.9rem;">⚠️ Include Unit/House No. as reference</p>
-        </div>
-        <div class="card">
-            <h3>📞 Contact Us</h3>
-            <p>📧 westwingresidences.hoa@gmail.com<br>📱 +63 939 773 4476<br>📍 Clubhouse, Brgy. 163, Caloocan City</p>
-        </div>
-    </div>
+<section id="payment" class="content-section">
+  <div><p class="section-kicker">PROOF OF PAYMENT</p><h2>Submit Your Payment Proof</h2>
+  <p>Complete the form. Your submission is sent through Netlify Forms when the site is hosted on Netlify. Please do not upload sensitive financial credentials.</p></div>
+  <form class="hoa-form" name="proof-of-payment" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" enctype="multipart/form-data">
+    <input type="hidden" name="form-name" value="proof-of-payment">
+    <p class="hidden-field"><label>Do not fill this out: <input name="bot-field"></label></p>
+    <label>Homeowner Name<input required name="name" autocomplete="name" placeholder="Full name"></label>
+    <label>Email Address<input required type="email" name="email" autocomplete="email" placeholder="you@example.com"></label>
+    <label>Unit / House No.<input required name="unit" placeholder="Unit or house number"></label>
+    <label>Payment Date<input required type="date" name="date"></label>
+    <label>Amount Paid (PHP)<input required type="number" min="0" step="0.01" name="amount" placeholder="0.00"></label>
+    <label>Reference No.<input name="reference" placeholder="Payment reference"></label>
+    <label>Proof of Payment <small>(PDF/JPG/PNG, if enabled in your Netlify account)</small><input type="file" name="proof" accept=".pdf,.jpg,.jpeg,.png"></label>
+    <button class="btn btn-red" type="submit">SUBMIT PAYMENT DETAILS</button>
+  </form>
 </section>
 
-<section id="contact">
-    <h2 class="section-title">Contact Us</h2>
-    <div class="contact-wrapper">
-        <div class="contact-info">
-            <p><strong>📍 Office:</strong> 2nd Flr. Clubhouse, West Wing Residences, Brgy. 163, Caloocan City</p>
-            <p><strong>📧 Email:</strong> westwingresidences.hoa@gmail.com</p>
-            <p><strong>📞 Mobile:</strong> +63 939 773 4476</p>
-            <p><strong>🕒 Hours:</strong> Mon–Fri, 9AM–5PM</p>
-        </div>
-        <form onsubmit="alert('✅ Message sent successfully!'); this.reset(); return false;">
-            <input type="text" placeholder="Your Full Name" required>
-            <input type="text" placeholder="Unit / House No." required>
-            <input type="email" placeholder="Email" required>
-            <textarea rows="4" placeholder="Your Message" required></textarea>
-            <button type="submit" class="btn">Send Message</button>
-        </form>
-    </div>
+<section id="documents" class="content-section alt">
+  <div><p class="section-kicker">DOCUMENTS</p><h2>Forms &amp; Official Documents</h2>
+  <p>Access official WWRHAI documents below. Open a document in a new tab to view or download it.</p></div>
+  <div class="document-list">
+    <a href="assets/documents/Certificate.pdf" target="_blank" rel="noopener">Certificate of Registration</a>
+    <a href="assets/documents/Articles-of-Incorporation-AOI.pdf" target="_blank" rel="noopener">Articles of Incorporation (AOI)</a>
+    <a href="assets/documents/ByLaws.pdf" target="_blank" rel="noopener">By-Laws</a>
+  </div>
 </section>
 
-<footer>
-    <div class="footer-grid">
-        <div class="footer-col">
-            <h4>West Wing Residences HOA</h4>
-            <p>Cert. No.: NCR-H-26-0116 | TIN: 0025218<br>Registered May 21, 2026 — RA 9904</p>
-        </div>
-        <div class="footer-col">
-            <h4>Quick Links</h4>
-            <ul style="list-style:none; gap:0.5rem;">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#documents">Documents</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="copyright">© 2026 West Wing Residences Homeowners' Association, Inc. — All Rights Reserved</div>
-</footer>
+<section id="rules" class="content-section">
+  <div><p class="section-kicker">COMMUNITY RULES</p><h2>Rules &amp; Policies</h2>
+  <p>Publish only the latest board-approved West Wing Residences rules, parking policies, renovation guidelines, pet policies and other official regulations.</p></div>
+  <div class="info-box"><h3>For Homeowners</h3><p>Official rules and updates should be posted here after approval by the Association.</p></div>
+</section>
 
-<script>
-    function toggleMenu() { document.getElementById('navMenu').classList.toggle('show'); }
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-        a.onclick = e => { e.preventDefault(); document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'}); document.getElementById('navMenu').classList.remove('show'); };
-    });
-</script>
+<section id="events" class="content-section alt">
+  <div><p class="section-kicker">MEETINGS &amp; EVENTS</p><h2>Community Calendar</h2>
+  <p>Upcoming General Assemblies, elections, townhall meetings and community activities can be listed here.</p></div>
+  <div class="calendar-card"><strong>COMING SOON</strong><p>Event dates and meeting notices will appear here.</p></div>
+</section>
 
+<section id="announcements-list" class="content-section">
+  <div><p class="section-kicker">ANNOUNCEMENTS</p><h2>Latest Community Notices</h2>
+  <article class="notice"><strong>May 21, 2026</strong><h3>Official Effectivity Date of WWRHAI Assumption of Management</h3><p>Official effectivity date: June 1, 2026.</p></article></div>
+</section>
+
+<section id="contact" class="contact-section">
+  <div><p class="section-kicker">CONTACT US</p><h2>Get in Touch With WWRHAI</h2>
+    <p>Email: <a href="mailto:westwingresidences.hoa@gmail.com">westwingresidences.hoa@gmail.com</a></p>
+    <p>Viber: <a href="tel:+639397734476">0939 773 4476</a></p>
+    <p>West Wing Residences, Brgy. 163, Sta. Quiteria/Talipapa, District 1, Caloocan, Northern Manila District, Metro Manila</p>
+  </div>
+  <form class="hoa-form" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+    <input type="hidden" name="form-name" value="contact">
+    <p class="hidden-field"><label>Do not fill this out: <input name="bot-field"></label></p>
+    <label>Name<input required name="name" autocomplete="name" placeholder="Your name"></label>
+    <label>Email<input required type="email" name="email" autocomplete="email" placeholder="you@example.com"></label>
+    <label>Message<textarea required name="message" rows="5" placeholder="How can we help?"></textarea></label>
+    <button class="btn btn-red" type="submit">SEND MESSAGE</button>
+  </form>
+</section>
+</main>
+
+<footer><div><strong>WEST WING RESIDENCES HOMEOWNERS’ ASSOCIATION, INC.</strong><br>One Community. One Home. One West Wing.</div><div>© <span id="year"></span> WWRHAI. All rights reserved.</div></footer>
+
+<div class="modal" id="portalModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="portalTitle">
+  <div class="modal-card"><button class="modal-close" data-close aria-label="Close">×</button>
+    <p class="section-kicker">HOMEOWNER PORTAL</p><h2 id="portalTitle">Homeowner Portal</h2>
+    <p>The portal is ready to be connected. Set <code>PORTAL_URL</code> in <code>script.js</code> to your actual homeowner login URL.</p>
+    <a class="btn btn-red" id="portalLink" href="#" target="_blank" rel="noopener">OPEN PORTAL</a>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script src="script.js"></script>
 </body>
 </html>
